@@ -1,31 +1,28 @@
-import { useState } from 'react'
-import './App.css'
+import { useDispatch, useSelector } from "react-redux"
+import { decrement, increment } from "./redux/features/counter/counterSlice"
 
 function App() {
-  const [count, setCount] = useState(0)
+  const dispatch = useDispatch()
+  const { count } = useSelector((state) => state.counter)
 
-  const countSync = () => {
-    setCount(() => count + 1)
+  const handleIncrement = () => {
+    dispatch(increment())
   }
-  const countASync = async () => {
-    setTimeout(() => {
-      setCount(() => count + 1)
-    }, 3000)
+
+  const handleDecrement = () => {
+    dispatch(decrement())
   }
 
   return (
 
-    <div className="card">
-      <h1>Count is {count}</h1>
+    <div>
+      <h1>Counter With Reduxt</h1>
 
-      <button onClick={countSync}>
-        Click sync
-      </button> <br />
-
-      <button onClick={countASync}>
-        Click ASync
-      </button>
-
+      <div>
+        <button onClick={handleIncrement}>Increment</button>
+        <div>{count}</div>
+        <button onClick={handleDecrement}>Decrement</button>
+      </div>
 
     </div>
   )
