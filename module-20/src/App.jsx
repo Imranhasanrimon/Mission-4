@@ -13,10 +13,16 @@ function App() {
     dispatch(decrement())
   }
 
+  //normal function
+  const add = (a, b) => a + b;
+
+  //function currying
+  const add2 = (a) => (b) => a + b;
+
   return (
 
     <div>
-      <h1>Counter With Reduxt</h1>
+      <h1>Counter With Redux</h1>
 
       <div>
         <button onClick={handleIncrement}>Increment</button>
