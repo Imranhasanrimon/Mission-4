@@ -7,7 +7,7 @@ interface IProps {
     task: ITask;
 }
 const TaskCard = ({ task }: IProps) => {
-
+    console.log(task);
     return (
         <div className="border p-3 rounded-md mt-3">
 
