@@ -4,12 +4,19 @@ import { quizQuestions } from '@/home/quizData'
 
 const initialState = {
     questions: quizQuestions,
+    currentQuestionIndex: 0,
+    userAnswer: Array(quizQuestions.length).fill(null)
 }
 
 export const quizSlice = createSlice({
     name: 'quiz',
     initialState,
-    reducers: {},
+    reducers: {
+        setAnswer: (state, action) => {
+            const { questionIndex, answer } = action.payload;
+            state.userAnswer[questionIndex] = answer;
+        }
+    },
 })
 
 export const { } = quizSlice.actions
