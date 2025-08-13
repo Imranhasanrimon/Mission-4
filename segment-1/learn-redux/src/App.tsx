@@ -1,12 +1,13 @@
 import './App.css'
-import { Button } from './components/ui/button'
 import Question from './home/Question'
+import QuizSummary from './home/QuizSummary'
+import { useAppSelector } from './redux/hooks'
 
 function App() {
-
+  const { isCompleted } = useAppSelector(state => state.quiz)
   return (
     <>
-      <Question></Question>
+      {isCompleted ? <QuizSummary /> : <Question />}
     </>
   )
 }
