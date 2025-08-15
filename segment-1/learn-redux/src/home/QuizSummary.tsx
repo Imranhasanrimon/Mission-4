@@ -8,7 +8,7 @@ export default function QuizSummary() {
             </CardHeader>
             <CardContent>
                 <div>
-                    hellow
+                    hellow world
                 </div>
             </CardContent>
         </Card>
