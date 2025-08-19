@@ -27,7 +27,7 @@ function App() {
       <div>
         <button onClick={handleIncrement}>Increment</button>
         <div>{count}</div>
-        <button onClick={handleDecrement}>Decrement</button>
+        <button style={{ backgroundColor: "green" }} onClick={handleDecrement}>Decrement</button>
       </div>
 
     </div>
