@@ -24,7 +24,7 @@ import { CalendarIcon } from "lucide-react"
 // import { Label } from "@/components/ui/label"
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 
-export function AddTaskModal() {
+export function UpdateTaskModal() {
     const form = useForm()
     const dispatch = useAppDispatch()
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
