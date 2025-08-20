@@ -1,33 +1,19 @@
 import { useDispatch, useSelector } from "react-redux"
-import { decrement, increment } from "./redux/features/counter/counterSlice"
+import { increment } from "./redux/features/counter/counterSlice"
+
 
 function App() {
   const dispatch = useDispatch()
   const { count } = useSelector((state) => state.counter)
-
-  const handleIncrement = () => {
-    dispatch(increment())
-  }
-
-  const handleDecrement = () => {
-    dispatch(decrement())
-  }
-
-  //normal function
-  const add = (a, b) => a + b;
-
-  //function currying
-  const add2 = (a) => (b) => a + b;
-
   return (
 
     <div>
       <h1>Counter With Redux</h1>
 
       <div>
-        <button onClick={handleIncrement}>Increment</button>
+        <button onClick={() => dispatch(increment())}>Increment</button>
         <div>{count}</div>
-        <button style={{ backgroundColor: "green" }} onClick={handleDecrement}>Decrement</button>
+        <button style={{ backgroundColor: "green" }} >Decrement</button>
       </div>
 
     </div>
