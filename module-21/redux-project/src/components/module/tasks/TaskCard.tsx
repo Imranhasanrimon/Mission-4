@@ -4,13 +4,14 @@ import { deleteTask, toggleCompleteState } from "@/redux/features/task/taskSlice
 import { useAppDispatch } from "@/redux/hook";
 import type { ITask } from "@/types"
 import { Trash2 } from "lucide-react"
+import { UpdateTaskModal } from "./UpdateTaskModal";
 
-interface IProps {
+export interface IProps {
     task: ITask;
 }
 const TaskCard = ({ task }: IProps) => {
     const dispatch = useAppDispatch()
-    console.log(task);
+    // console.log(task);
     return (
         <div className="border p-3 rounded-md mt-3">
 
@@ -25,6 +26,7 @@ const TaskCard = ({ task }: IProps) => {
                 </div>
 
                 <div className="flex items-center gap-2">
+                    <UpdateTaskModal task={task} />
                     <Trash2 size={18} className="text-red-500" onClick={() => dispatch(deleteTask(task.id))} />
                     <Checkbox checked={task.isCompleted} onClick={() => dispatch(toggleCompleteState(task.id))} />
                 </div>

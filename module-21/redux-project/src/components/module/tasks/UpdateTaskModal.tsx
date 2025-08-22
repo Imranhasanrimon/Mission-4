@@ -16,30 +16,31 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
-import { addTask } from "@/redux/features/task/taskSlice"
+import { updateTask } from "@/redux/features/task/taskSlice"
 import { useAppDispatch } from "@/redux/hook"
 import type { ITask } from "@/types"
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, Settings } from "lucide-react"
 // import { Label } from "@/components/ui/label"
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
+import type { IProps } from "./TaskCard"
 
-export function UpdateTaskModal() {
+export function UpdateTaskModal({ task }: IProps) {
     const form = useForm()
     const dispatch = useAppDispatch()
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        // console.log(data.dueDate);
-        dispatch(addTask(data as ITask))
+        console.log(data);
+        dispatch(updateTask({ ...data, id: task.id } as ITask))
     }
 
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">Add Task</Button>
+                <Button variant="ghost"><Settings /></Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Add Task</DialogTitle>
+                    <DialogTitle>Update Task</DialogTitle>
                     <DialogDescription className="hidden">
                         Make changes to your profile here. Click save when you&apos;re
                         done.
@@ -55,7 +56,7 @@ export function UpdateTaskModal() {
                                 <FormItem>
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
-                                        <Input {...field} value={field.value || ""} />
+                                        <Input {...field} value={field.value || task.title} />
                                     </FormControl>
                                 </FormItem>
                             )}
@@ -67,7 +68,7 @@ export function UpdateTaskModal() {
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Textarea {...field} value={field.value || ""} />
+                                        <Textarea {...field} value={field.value || task.description} />
                                     </FormControl>
                                 </FormItem>
                             )}
@@ -78,7 +79,7 @@ export function UpdateTaskModal() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Priority</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} defaultValue={task.priority}>
                                         <FormControl>
                                             <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Select a priority of this task" />
@@ -118,12 +119,12 @@ export function UpdateTaskModal() {
                                                 </Button>
                                             </FormControl>
                                         </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0" align="start">
+                                        <PopoverContent className="w-auto p-0" align="center">
                                             <Calendar
                                                 mode="single"
                                                 // selected={field.value}
                                                 // onSelect={field.onChange}
-                                                selected={field.value ? new Date(field.value) : undefined}
+                                                selected={field.value ? new Date(field.value) : new Date(task.dueDate)}
                                                 onSelect={(date) => field.onChange(date?.toISOString())}
                                                 // disabled={(date) =>
                                                 //     date > new Date() || date < new Date("1900-01-01")
@@ -137,7 +138,7 @@ export function UpdateTaskModal() {
                             )}
                         />
 
-                        <Button type="submit" variant="secondary" className="w-full">Add</Button>
+                        <Button type="submit" variant="secondary" className="w-full">Update</Button>
                     </form>
                 </Form>
                 <DialogFooter className="sm:justify-start">
