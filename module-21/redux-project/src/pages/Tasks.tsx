@@ -1,12 +1,15 @@
 import { AddTaskModal } from "@/components/module/tasks/AddTaskModal";
 import TaskCard from "@/components/module/tasks/TaskCard";
-import { changePriority, selectTasks } from "@/redux/features/task/taskSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useGetTasksQuery } from "@/redux/api/baseAPI";
 
 const Tasks = () => {
-    const tasks = useAppSelector(selectTasks);
-    const dispatch = useAppDispatch()
+    const { data, isLoading, isError } = useGetTasksQuery(undefined)
+    console.log({ data, isLoading, isError });
+
+    if (isLoading) {
+        return <h1>Loading....</h1>
+    }
     return (
         <div className="w-11/12 mx-auto mt-10">
 
@@ -15,10 +18,10 @@ const Tasks = () => {
                 <div className="flex justify-end">
                     <Tabs defaultValue="All" className="w-[400px]">
                         <TabsList>
-                            <TabsTrigger onClick={() => dispatch(changePriority("All"))} value="All">All</TabsTrigger>
-                            <TabsTrigger onClick={() => dispatch(changePriority("High"))} value="High">High</TabsTrigger>
-                            <TabsTrigger onClick={() => dispatch(changePriority("Medium"))} value="Medium">Medium</TabsTrigger>
-                            <TabsTrigger onClick={() => dispatch(changePriority("Low"))} value="Low">Low</TabsTrigger>
+                            <TabsTrigger value="All">All</TabsTrigger>
+                            <TabsTrigger value="High">High</TabsTrigger>
+                            <TabsTrigger value="Medium">Medium</TabsTrigger>
+                            <TabsTrigger value="Low">Low</TabsTrigger>
                         </TabsList>
                     </Tabs>
                     <AddTaskModal />
@@ -26,7 +29,7 @@ const Tasks = () => {
             </div>
 
             {
-                tasks.map(task => <TaskCard key={task.id} task={task} />)
+                data.tasks.map(task => <TaskCard key={task.id} task={task} />)
             }
         </div>
     )

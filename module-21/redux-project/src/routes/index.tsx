@@ -15,7 +15,8 @@ const router = createBrowserRouter([
             },
             {
                 path: "users",
-                element: <Users />
+                // element: <Users />
+                element: <h1>Hellow User route</h1>
             },
         ]
     }

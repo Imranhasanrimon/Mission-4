@@ -1,17 +1,19 @@
 import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils";
 import { deleteTask, toggleCompleteState } from "@/redux/features/task/taskSlice";
-import { useAppDispatch } from "@/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import type { ITask } from "@/types"
 import { Trash2 } from "lucide-react"
 import { UpdateTaskModal } from "./UpdateTaskModal";
+import { selectUsers } from "@/redux/features/user/userSlice";
 
 export interface IProps {
     task: ITask;
 }
 const TaskCard = ({ task }: IProps) => {
     const dispatch = useAppDispatch()
-    // console.log(task);
+    // const users = useAppSelector(selectUsers)
+    // const user = users.find(user => user.id === task.assignTo)
     return (
         <div className="border p-3 rounded-md mt-3">
 
@@ -23,8 +25,8 @@ const TaskCard = ({ task }: IProps) => {
                         "bg-red-500": task.priority === "High",
                     })} />
                     <h2 className="font-bold text-lg">{task.title}</h2>
+                    {/* <h3 className="text-xs text-yellow-600">(Assign To: {user?.name ? user?.name : "No One"})</h3> */}
                 </div>
-
                 <div className="flex items-center gap-2">
                     <UpdateTaskModal task={task} />
                     <Trash2 size={18} className="text-red-500" onClick={() => dispatch(deleteTask(task.id))} />

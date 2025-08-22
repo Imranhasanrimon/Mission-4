@@ -1,9 +1,11 @@
 import { AddUserModal } from "@/components/module/users/AddUserModal"
-import { selectUsers } from "@/redux/features/user/userSlice"
-import { useAppSelector } from "@/redux/hook"
+import { deleteUser, selectUsers } from "@/redux/features/user/userSlice"
+import { useAppDispatch, useAppSelector } from "@/redux/hook"
+import { Trash2 } from "lucide-react"
 
 const Users = () => {
     const users = useAppSelector(selectUsers)
+    const dispatch = useAppDispatch()
 
     return (
         <div className="w-11/12 mx-auto mt-10">
@@ -17,7 +19,10 @@ const Users = () => {
                 {users.map(user => <div
                     className="bg-accent/20 border rounded-md p-2"
                     key={user.id}>
-                    <h2 className="text-red-500 font-bold">{user.name}</h2>
+                    <div className="flex justify-between">
+                        <h2 className="text-green-400 font-bold">{user.name}</h2>
+                        <Trash2 size={18} className="text-red-500" onClick={() => dispatch(deleteUser(user.id))} />
+                    </div>
                     <p className="text-xs">{user.id}</p>
                 </div>)}
             </div>

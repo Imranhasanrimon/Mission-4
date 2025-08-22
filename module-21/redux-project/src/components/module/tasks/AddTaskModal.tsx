@@ -16,24 +16,31 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
-import { addTask } from "@/redux/features/task/taskSlice"
-import { useAppDispatch } from "@/redux/hook"
+import { useAddTaskMutation } from "@/redux/api/baseAPI"
 import type { ITask } from "@/types"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
+import { useState } from "react"
 // import { Label } from "@/components/ui/label"
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 
 export function AddTaskModal() {
+    const [open, setOpen] = useState(false)
     const form = useForm()
-    const dispatch = useAppDispatch()
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        // console.log(data.dueDate);
-        dispatch(addTask(data as ITask))
+    const [addTask, { data, isLoading, isError }] = useAddTaskMutation()
+    console.log(data);
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        const taskData = {
+            ...data, id: "1254651", isCompleted: false
+        }
+        console.log(taskData);
+        const res = addTask(taskData).unwrap()
+        setOpen(false)
+        form.reset()
     }
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button variant="outline">Add Task</Button>
             </DialogTrigger>
@@ -93,6 +100,25 @@ export function AddTaskModal() {
                                 </FormItem>
                             )}
                         />
+                        {/* <FormField
+                            control={form.control}
+                            name="assignTo"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Assign To</FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select an user to assign this task" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {users.map(user => <SelectItem key={user.id} value={user.id}>{user.name}</SelectItem>)}
+                                        </SelectContent>
+                                    </Select>
+                                </FormItem>
+                            )}
+                        /> */}
                         <FormField
                             control={form.control}
                             name="dueDate"
