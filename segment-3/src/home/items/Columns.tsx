@@ -1,4 +1,5 @@
 import { type ColumnDef } from "@tanstack/react-table"
+import UpdateItemModal from "../updateItems/UpdateItemModal";
 
 export interface Item {
     _id: string;
@@ -56,6 +57,17 @@ export const columns: ColumnDef<Item>[] = [
         cell: ({ row }) => {
             const date = row.getValue<string>("updatedAt")
             return date ? new Date(date).toLocaleDateString() : "-"
+        },
+    },
+    {
+        id: "actions", // <-- no accessorKey because it's custom
+        header: "Actions",
+        cell: ({ row }) => {
+            const item = row.original // full row data
+
+            return (
+                <UpdateItemModal item={item} />
+            )
         },
     },
 ]
