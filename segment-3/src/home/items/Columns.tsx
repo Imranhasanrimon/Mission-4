@@ -64,7 +64,6 @@ export const columns: ColumnDef<Item>[] = [
         header: "Actions",
         cell: ({ row }) => {
             const item = row.original // full row data
-
             return (
                 <UpdateItemModal item={item} />
             )
